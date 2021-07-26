@@ -2,48 +2,43 @@ package com.ibareq.weathersample.data.repository
 
 import com.ibareq.weathersample.data.Status
 import com.ibareq.weathersample.data.network.Client
-import io.reactivex.rxjava3.core.Observable
-import com.ibareq.weathersample.data.response.WeatherResponse
-import com.ibareq.weathersample.data.response.LocationResponse
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flow
 
 
 object WeatherRepository {
-    fun getWeatherForCity(cityName: String): Observable<Status<WeatherResponse>> {
-        return getLocationInfo(cityName).flatMap {
-            when(it){
-                is Status.Error -> {
-                    Observable.create{ emitter ->
-                        emitter.onNext(it)
-                        emitter.onComplete()
-                    }
+    @FlowPreview
+    fun getWeatherForCity(cityName: String) = getLocationInfo(cityName).flatMapConcat {
+        when (it) {
+            is Status.Error -> {
+                flow {
+                    emit(it)
                 }
-                is Status.Loading -> {
-                    Observable.create{ emitter ->
-                        emitter.onNext(it)
-                        emitter.onComplete()
-                    }
+            }
+            is Status.Loading -> {
+                flow {
+                    emit(it)
                 }
-                is Status.Success -> {
-                    Observable.create { emitter ->
-                        if (it.data.isEmpty()){
-                            emitter.onNext(Status.Error("city not found"))
-                        } else {
-                            emitter.onNext(Client.getWeatherForCity(it.data[0].cityId)) //to make it easier we pick the first city and skip others
-                        }
-                        emitter.onComplete()
+            }
+            is Status.Success -> {
+                flow {
+                    if (it.data.isEmpty()) {
+                        emit(Status.Error("city not found"))
+                    } else {
+                        emit(Client.getWeatherForCity(it.data[0].cityId)) //to make it easier we pick the first city and skip others
                     }
                 }
             }
         }
 
+
     }
 
-    private fun getLocationInfo(cityName: String): Observable<Status<LocationResponse>> {
-        return Observable.create { emitter ->
-            emitter.onNext(Status.Loading)
-            emitter.onNext(Client.getLocationResponse(cityName))
-            emitter.onComplete()
-        }
+    private fun getLocationInfo(cityName: String) = flow {
+        emit(Status.Loading)
+        emit(Client.getLocationResponse(cityName))
     }
+
 
 }

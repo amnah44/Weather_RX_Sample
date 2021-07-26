@@ -1,8 +1,8 @@
-# Weather_RX_Sample
+# Weather_Convert_RX_To_Coroutines VS Kotlin flow_Sample
 simple code sample for the chance students
 
 - View Binding
-- RX Java
+- Coroutines and kotlin flow
 - OKHttp
 - Gson
-- flatmap operator
+- flatMapConcat operator
