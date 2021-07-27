@@ -1,5 +1,6 @@
 package com.ibareq.weathersample.ui
 
+import android.app.ProgressDialog.show
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -47,9 +48,20 @@ class MainActivity : AppCompatActivity() {
         hideAllViews()
         when(response){
             is Status.Error -> {
+                binding.searchLottie.hide()
+                binding.question.hide()
+                binding.description.hide()
+                binding.textMaxTempDescription.hide()
+                binding.retryMsg.show()
                 binding.imageError.show()
+
             }
             is Status.Loading -> {
+                binding.searchLottie.hide()
+                binding.question.hide()
+                binding.description.hide()
+                binding.retryMsg.hide()
+                binding.imageError.hide()
                 binding.progressLoading.show()
             }
             is Status.Success -> {
@@ -59,11 +71,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun bindData(data: WeatherResponse){
+        binding.searchLottie.hide()
+        binding.question.hide()
+        binding.description.hide()
+        binding.retryMsg.hide()
+        binding.textMaxTempDescription.show()
         binding.textMaxTemp.run {
             show()
             val maxTemp = data.consolidatedWeather[0].maxTemp.roundToInt().toString()
             val cityName = data.title
-            text = "$cityName: $maxTemp"
+            text = "$cityName  $maxTemp ْْ°C"
         }
     }
 

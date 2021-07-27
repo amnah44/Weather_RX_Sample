@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Weather Sample</string>
     <string name="search">search</string>
+    <string name="what_are_n_you_searching_for">What are \n you searching for?</string>
+    <string name="search_about_some_city_by_enter_name_of_it">Find a temperature of your city by enter name of it.</string>
+    <string name="retry">Retry please!!</string>
+    <string name="city_name_amp_max_temp"><![CDATA[City name & Max temp]]></string>
 </resources>
