@@ -3,7 +3,7 @@
     <style name="Theme.WeatherSample" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimaryVariant">@color/blue_500</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -15,7 +15,7 @@
     </style>
     <!-- style of Linear that include search box and button for do a search -->
     <style name="theme_linear">
-        <item name="android:background">@drawable/shape_search</item>
+        <item name="android:background">@drawable/weather_card_shape</item>
         <item name="android:orientation">horizontal</item>
         <item name="android:layout_marginLeft">@dimen/margin_small_3</item>
         <item name="android:layout_marginTop">@dimen/margin_small_3</item>
@@ -23,14 +23,17 @@
         <item name="android:paddingBottom">@dimen/margin_small_2</item>
         <item name="android:layout_marginRight">@dimen/margin_small_3</item>
         <item name="android:gravity">center</item>
+        <item name="android:elevation">@dimen/margin_small_2</item>
     </style>
     <!-- style of edit text that include name of city -->
     <style name="theme_search_box">
-        <item name="android:background">@drawable/shape_search</item>
+        <item name="android:background">@drawable/weather_card_shape</item>
         <item name="android:textSize">@dimen/text_size_normal_2</item>
-        <item name="android:paddingStart">@dimen/margin_small_2</item>
-        <item name="android:paddingEnd">@dimen/margin_small_2</item>
+        <item name="android:paddingStart">@dimen/margin_small</item>
+        <item name="android:paddingEnd">@dimen/margin_small</item>
         <item name="android:maxLength">15</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
         <item name="android:hint">@string/search</item>
     </style>
     <!-- style to make public gravity -->

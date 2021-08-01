@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    android:id="@+id/weather_card"
+    app:cardBackgroundColor="@color/blue_500"
+    app:cardCornerRadius="@dimen/margin_small_2"
+    app:cardElevation="@dimen/margin_small_2">
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="@dimen/margin_small_2"
+        android:orientation="vertical"
+        >
+        <ImageView
+            android:layout_width="@dimen/margin_small"
+            android:layout_height="@dimen/margin_small"
+            android:id="@+id/image_icon"
+            android:layout_margin="@dimen/margin_small_2"
+            android:src="@mipmap/ic_launcher"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/date"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:text="date"
+            />
+        <TextView
+            android:layout_margin="@dimen/margin_small_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/temp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:text="33 ℃"
+            />
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

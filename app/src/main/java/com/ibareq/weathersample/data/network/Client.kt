@@ -1,6 +1,7 @@
 package com.ibareq.weathersample.data.network
 
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.ibareq.weathersample.data.Status
 import com.ibareq.weathersample.data.response.LocationResponse
 import com.ibareq.weathersample.data.response.WeatherResponse
@@ -10,7 +11,7 @@ import okhttp3.Request
 object Client {
     private val okHttpClient = OkHttpClient()
     private val baseUrl = "https://www.metaweather.com/api/"
-    private val gson = Gson()
+    private val gson = GsonBuilder().create()
 
     fun getWeatherForCity(cityId: Int): Status<WeatherResponse>{
         val request = Request.Builder().url("${baseUrl}location/$cityId/").build()
