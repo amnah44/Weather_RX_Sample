@@ -1,22 +1,19 @@
 package com.ibareq.weathersample.ui
 
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.ibareq.weathersample.R
 import com.ibareq.weathersample.data.Status
+import com.ibareq.weathersample.data.repository.*
 import com.ibareq.weathersample.data.response.WeatherResponse
 import com.ibareq.weathersample.databinding.ActivityMainBinding
+import com.ibareq.weathersample.ui.adapter.WeatherAdapter
+import com.ibareq.weathersample.util.Parser
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import com.ibareq.weathersample.data.repository.*
-import com.ibareq.weathersample.data.response.ConsolidatedWeather
-import com.ibareq.weathersample.ui.adapter.WeatherAdapter
-import com.ibareq.weathersample.util.Parser
 import java.io.IOException
 import java.util.*
 import kotlin.math.roundToInt
@@ -45,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         disposable.dispose()
     }
 
-    private fun getWeatherForCity(cityName:String){
+    private fun getWeatherForCity(cityName: String) {
         disposable.add(
             WeatherRepository.getWeatherForCity(cityName)
                 .subscribeOn(Schedulers.io())
@@ -54,17 +51,15 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun onWeatherResult(response: Status<WeatherResponse>){
+    private fun onWeatherResult(response: Status<WeatherResponse>) {
         hideAllViews()
-        when(response){
+        when (response) {
             is Status.Error -> {
-                binding.imageError.show()
-                binding.imageError2.show()
+                binding.error.show()
+                binding.parentContainer.hide()
 
             }
             is Status.Loading -> {
-               // binding.progressLoading.show()
-//                binding.progress1.show()
                 binding.loadding.show()
                 binding.parentContainer.hide()
 
@@ -73,7 +68,7 @@ class MainActivity : AppCompatActivity() {
                 bindData(response.data)
 
                 binding.recyclerView.apply {
-                    adapter = WeatherAdapter(response.data,this@MainActivity)
+                    adapter = WeatherAdapter(response.data, this@MainActivity)
                     setHasFixedSize(true)
 
                 }
@@ -83,7 +78,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SimpleDateFormat", "SetTextI18n")
-    private fun bindData(data: WeatherResponse){
+    private fun bindData(data: WeatherResponse) {
 
         binding.textMaxTemp.run {
             show()
@@ -112,8 +107,9 @@ class MainActivity : AppCompatActivity() {
         getIconWeather(icon)
 
     }
+
     @SuppressLint("SetTextI18n")
-    private fun getWeatherState(data:WeatherResponse){
+    private fun getWeatherState(data: WeatherResponse) {
 
         val humidity = data.consolidatedWeather[0].humidity.toString()
         val airPressure = data.consolidatedWeather[0].airPressure.roundToInt().toString()
@@ -127,12 +123,13 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun getIconWeather(icon:String){
+    private fun getIconWeather(icon: String) {
         var url = ""
-        when (icon){
+        when (icon) {
             "Clear" -> {
                 url = "https://image.flaticon.com/icons/png/128/4336/4336193.png"
-                Glide.with(this@MainActivity).load(url).into(binding.weatherIcon)            }
+                Glide.with(this@MainActivity).load(url).into(binding.weatherIcon)
+            }
 
             "Heavy Cloud" -> {
                 url = "https://image.flaticon.com/icons/png/128/1146/1146869.png"
@@ -141,40 +138,44 @@ class MainActivity : AppCompatActivity() {
 
             "Light Cloud" -> {
                 url = "https://image.flaticon.com/icons/png/512/414/414825.png"
-                Glide.with(this@MainActivity).load(url).into(binding.weatherIcon)            }
+                Glide.with(this@MainActivity).load(url).into(binding.weatherIcon)
+            }
 
             "Light Rain" -> {
                 url = "https://image.flaticon.com/icons/png/128/899/899693.png"
-                Glide.with(this@MainActivity).load(url).into(binding.weatherIcon)            }
+                Glide.with(this@MainActivity).load(url).into(binding.weatherIcon)
+            }
 
             "Heavy Rain" -> {
                 url = "https://image.flaticon.com/icons/png/128/3937/3937493.png"
-                Glide.with(this@MainActivity).load(url).into(binding.weatherIcon)            }
+                Glide.with(this@MainActivity).load(url).into(binding.weatherIcon)
+            }
 
             "Showers" -> {
                 url = "https://image.flaticon.com/icons/png/128/1327/1327601.png"
-                Glide.with(this@MainActivity).load(url).into(binding.weatherIcon)            }
+                Glide.with(this@MainActivity).load(url).into(binding.weatherIcon)
+            }
 
             "Dust" -> {
                 url = "https://image.flaticon.com/icons/png/128/4336/4336193.png"
-                Glide.with(this@MainActivity).load(url).into(binding.weatherIcon)            }
+                Glide.with(this@MainActivity).load(url).into(binding.weatherIcon)
+            }
             else -> IOException()
 
         }
 
     }
 
-    private fun hideAllViews(){
+    private fun hideAllViews() {
         binding.run {
-           // progressLoading.hide()
             loadding.hide()
-            imageError.hide()
+            error.hide()
             parentContainer.show()
 
         }
     }
 
-    companion object{
+    companion object {
         const val TAG = "BK_PROGRAMMER"
     }
 
