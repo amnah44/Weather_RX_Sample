@@ -90,11 +90,13 @@ class MainActivity : AppCompatActivity() {
             val maxTemp = data.consolidatedWeather[0].maxTemp.roundToInt().toString()
             text = "$maxTemp ْْ℃"
         }
-        val minTemp = data.consolidatedWeather[0].minTemp.roundToInt().toString()
-        binding.minTemp.text = "Min temp $minTemp ℃"
+        val minTempDegree = data.consolidatedWeather[0].minTemp.roundToInt().toString()
+        binding.apply {
+            minTemp.text = "Min temp $minTempDegree ℃"
+            cityName.text = data.title
+            time.text = Parser.formatTime(Calendar.getInstance().time)
+        }
 
-        binding.cityName.text = data.title
-        binding.time.text = Parser.formatTime(Calendar.getInstance().time)
 
         /*
         * get some data from api like
@@ -115,12 +117,12 @@ class MainActivity : AppCompatActivity() {
 
         val humidity = data.consolidatedWeather[0].humidity.toString()
         val airPressure = data.consolidatedWeather[0].airPressure.roundToInt().toString()
-        val windSpeed = data.consolidatedWeather[0].airPressure.roundToInt().toString()
+        val windSpeed = data.consolidatedWeather[0].windSpeed.roundToInt().toString()
 
         binding.apply {
             stateHumidity.text = "$humidity%"
-            stateAirPressure.text = "$airPressure km/h"
-            stateWindSpeed.text = "$windSpeed %"
+            stateAirPressure.text = "$airPressure kPa"
+            stateWindSpeed.text = "$windSpeed m/s"
         }
 
     }
