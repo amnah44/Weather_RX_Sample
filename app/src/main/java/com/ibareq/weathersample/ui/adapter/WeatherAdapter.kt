@@ -1,5 +1,6 @@
 package com.ibareq.weathersample.ui.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -27,6 +28,7 @@ class WeatherAdapter(val weatherResponse
         return WeatherHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: WeatherHolder, position: Int) {
         val current = weatherResponse.consolidatedWeather[position]
         val icon = current.weatherStateName
@@ -39,7 +41,8 @@ class WeatherAdapter(val weatherResponse
             getIconWeather(icon,holder)
 
             //format date
-            date.text = current.applicableDate
+            val dayPattern = current.applicableDate
+            date.text = Parser.formatDate(dayPattern)
 
             //get max temperatures of next days
             val maxTemp = current.maxTemp.roundToInt().toString()
@@ -51,9 +54,6 @@ class WeatherAdapter(val weatherResponse
             weatherCard.background = ContextCompat.getDrawable(context,
                 R.drawable.weather_current_item_shape
             )
-            weatherCard.elevation = 24F
-            date.setTextColor(Color.WHITE)
-            temp.setTextColor(Color.WHITE)
         }
 
     }
@@ -71,7 +71,7 @@ class WeatherAdapter(val weatherResponse
             }
 
             "Light Cloud" -> {
-                url = "https://image.flaticon.com/icons/png/128/892/892313.png"
+                url = "https://image.flaticon.com/icons/png/512/414/414825.png"
                 Glide.with(context).load(url).into(holder.binding.imageIcon)             }
 
             "Light Rain" -> {

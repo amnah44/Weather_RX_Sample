@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import com.bumptech.glide.Glide
+import com.ibareq.weathersample.R
 import com.ibareq.weathersample.data.Status
 import com.ibareq.weathersample.data.response.WeatherResponse
 import com.ibareq.weathersample.databinding.ActivityMainBinding
@@ -30,11 +32,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.buttonSearch.setOnClickListener {
-            getWeatherForCity(binding.inputCityName.text.toString())
-        }
+//        binding.buttonSearch.setOnClickListener {
+//            getWeatherForCity(binding.inputCityName.text.toString())
+//        }
 
-        getWeatherForCity("Baghdad")
+        getWeatherForCity("london")
     }
 
 
@@ -61,9 +63,11 @@ class MainActivity : AppCompatActivity() {
 
             }
             is Status.Loading -> {
-                binding.progressLoading.show()
-                binding.progress1.show()
-//                binding.progress2.show()
+               // binding.progressLoading.show()
+//                binding.progress1.show()
+                binding.loadding.show()
+                binding.parentContainer.hide()
+
             }
             is Status.Success -> {
                 bindData(response.data)
@@ -90,27 +94,34 @@ class MainActivity : AppCompatActivity() {
         binding.minTemp.text = "Min temp $minTemp ℃"
 
         binding.cityName.text = data.title
-
         binding.time.text = Parser.formatTime(Calendar.getInstance().time)
 
-
-        var url = "https://image.flaticon.com/icons/png/128/1146/1146869.png"
-        Glide.with(this@MainActivity).load(url).into(binding.humidity)
-        val humidity = data.consolidatedWeather[0].humidity.toString()
-        binding.stateHumidity.text = "$humidity %"
-        url = "https://image.flaticon.com/icons/png/128/1808/1808263.png"
-        Glide.with(this@MainActivity).load(url).into(binding.airPressureIcon)
-        val airPressure = data.consolidatedWeather[0].airPressure.roundToInt().toString()
-        binding.stateAirPressure.text = "$airPressure km/h"
-        url = "https://image.flaticon.com/icons/png/128/3026/3026375.png"
-        Glide.with(this@MainActivity).load(url).into(binding.windSpeed)
-        val windSpeed = data.consolidatedWeather[0].airPressure.roundToInt().toString()
-        binding.stateWindSpeed.text = "$windSpeed %"
+        /*
+        * get some data from api like
+        * daily humidity
+        * daily air pressure
+        * daily wind speed
+        */
+        getWeatherState(data)
 
         //show icon of weather
         val icon = data.consolidatedWeather[0].weatherStateName
         binding.weatherState.text = icon
         getIconWeather(icon)
+
+    }
+    @SuppressLint("SetTextI18n")
+    private fun getWeatherState(data:WeatherResponse){
+
+        val humidity = data.consolidatedWeather[0].humidity.toString()
+        val airPressure = data.consolidatedWeather[0].airPressure.roundToInt().toString()
+        val windSpeed = data.consolidatedWeather[0].airPressure.roundToInt().toString()
+
+        binding.apply {
+            stateHumidity.text = "$humidity%"
+            stateAirPressure.text = "$airPressure km/h"
+            stateWindSpeed.text = "$windSpeed %"
+        }
 
     }
 
@@ -127,7 +138,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             "Light Cloud" -> {
-                url = "https://image.flaticon.com/icons/png/128/892/892313.png"
+                url = "https://image.flaticon.com/icons/png/512/414/414825.png"
                 Glide.with(this@MainActivity).load(url).into(binding.weatherIcon)            }
 
             "Light Rain" -> {
@@ -153,11 +164,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun hideAllViews(){
         binding.run {
-            progress1.hide()
-            imageError2.hide()
-            progressLoading.hide()
-            textMaxTemp.hide()
+           // progressLoading.hide()
+            loadding.hide()
             imageError.hide()
+            parentContainer.show()
 
         }
     }
