@@ -6,3 +6,5 @@ simple code sample for the chance students
 - OKHttp
 - Gson
 - flatmap operator
+- MVP pattern design
+- SOLID principle
