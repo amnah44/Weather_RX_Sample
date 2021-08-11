@@ -1,4 +1,4 @@
-package com.ibareq.weathersample.data
+package com.ibareq.weathersample.model
 
 sealed class Status<out T>{
     object Loading : Status<Nothing>()

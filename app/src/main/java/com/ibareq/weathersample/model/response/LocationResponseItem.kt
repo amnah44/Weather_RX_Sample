@@ -1,4 +1,4 @@
-package com.ibareq.weathersample.data.response
+package com.ibareq.weathersample.model.response
 
 
 import com.google.gson.annotations.SerializedName
