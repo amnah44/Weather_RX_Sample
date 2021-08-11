@@ -1,4 +1,4 @@
-package com.ibareq.weathersample.view
+package com.ibareq.weathersample.ui
 
 import android.view.LayoutInflater
 import android.view.View

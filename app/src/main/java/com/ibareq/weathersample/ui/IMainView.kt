@@ -1,4 +1,4 @@
-package com.ibareq.weathersample.view
+package com.ibareq.weathersample.ui
 
 import com.ibareq.weathersample.model.Status
 import com.ibareq.weathersample.model.response.WeatherResponse
