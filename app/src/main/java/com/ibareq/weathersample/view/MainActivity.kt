@@ -14,10 +14,9 @@ import kotlin.math.roundToInt
 
 class MainActivity : BaseActivity<ActivityMainBinding>(), IMainView {
 
-    lateinit var presenter: MainPresenter
-
     private val disposable: CompositeDisposable = CompositeDisposable()
     //private val weatherRepository = WeatherRepository()
+    private var presenter = MainPresenter(this)
 
     override val LOG_TAG: String = TAG
 
@@ -25,24 +24,24 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), IMainView {
         ActivityMainBinding::inflate
 
     override fun setup() {
-        presenter = MainPresenter()
-        binding!!.buttonSearch.setOnClickListener {
-            getWeatherForCity(binding!!.inputCityName.text.toString())
-        }
+
+            binding!!.buttonSearch.setOnClickListener {
+                presenter.getWeatherForCity(binding!!.inputCityName.text.toString())
+            }
     }
 
-    override fun addCallbacks() { }
+    override fun addCallbacks() {}
 
-    override fun getWeatherForCity(cityName: String) {
+    override fun onWeatherResult(response: Observable<Status<WeatherResponse>>) {
         disposable.add(
-            presenter.getWeatherForCity(cityName)
+                 response
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(::onWeatherResult)
+                .subscribe(::getView)
         )
-    }
 
-    override fun onWeatherResult(response: Status<WeatherResponse>) {
+    }
+    private fun getView(response: Status<WeatherResponse>){
         hideAllViews()
         when (response) {
             is Status.Error -> {

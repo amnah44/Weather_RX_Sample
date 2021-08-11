@@ -2,11 +2,11 @@ package com.ibareq.weathersample.view
 
 import com.ibareq.weathersample.model.Status
 import com.ibareq.weathersample.model.response.WeatherResponse
+import io.reactivex.rxjava3.core.Observable
 
 interface IMainView {
 
-    fun getWeatherForCity(cityName: String)
-    fun onWeatherResult(response: Status<WeatherResponse>)
+    fun onWeatherResult(response: Observable<Status<WeatherResponse>>)
     fun bindData(data: WeatherResponse)
     fun hideAllViews()
 }

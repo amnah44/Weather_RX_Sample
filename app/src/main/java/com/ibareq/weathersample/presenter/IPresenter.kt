@@ -6,7 +6,7 @@ import io.reactivex.rxjava3.core.Observable
 
 interface IPresenter {
 
-    fun getWeatherForCity(cityName: String): Observable<Status<WeatherResponse>>
+    fun getWeatherForCity(cityName: String)
 
 
 }

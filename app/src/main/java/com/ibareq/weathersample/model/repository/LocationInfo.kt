@@ -1,4 +1,4 @@
-package com.ibareq.weathersample.presenter
+package com.ibareq.weathersample.model.repository
 
 import com.ibareq.weathersample.model.Status
 import com.ibareq.weathersample.model.network.Client
@@ -7,7 +7,7 @@ import io.reactivex.rxjava3.core.Observable
 
 open class LocationInfo(private val client: Client){
 
-    open fun getLocationInfo(cityName: String): Observable<Status<LocationResponse>> =
+     fun getLocationInfo(cityName: String): Observable<Status<LocationResponse>> =
         Observable.create { emitter ->
             emitter.onNext(Status.Loading)
             emitter.onNext(client.getLocationResponse(cityName))
