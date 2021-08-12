@@ -6,10 +6,10 @@ import com.ibareq.weathersample.model.response.LocationResponse
 import com.ibareq.weathersample.model.response.WeatherResponse
 import io.reactivex.rxjava3.core.Observable
 
-object WeatherRepository {
+object WeatherRepository: IWeather {
 
     private val locationInfo = LocationInfo(Client)
-    fun getWeatherForCity(cityName: String): Observable<Status<WeatherResponse>> =
+    override fun getWeatherForCity(cityName: String): Observable<Status<WeatherResponse>> =
         locationInfo.getLocationInfo(cityName).flatMap {
             when (it) {
                 is Status.Error -> {
