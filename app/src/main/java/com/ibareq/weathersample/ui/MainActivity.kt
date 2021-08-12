@@ -37,12 +37,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), IMainView {
             response
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(::getView)
+                .subscribe(::getViewAndHideAnotherView)
         )
 
     }
 
-    private fun getView(response: Status<WeatherResponse>) {
+    private fun getViewAndHideAnotherView(response: Status<WeatherResponse>) {
         hideAllViews()
         when (response) {
             is Status.Error -> {
