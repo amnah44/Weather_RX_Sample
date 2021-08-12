@@ -6,7 +6,7 @@ import com.ibareq.weathersample.model.response.LocationResponse
 import com.ibareq.weathersample.model.response.WeatherResponse
 import okhttp3.Response
 
-class CheckResponse(private val gson:Gson) : ICheck {
+class ResponseExaminer(private val gson:Gson) : ICheck {
 
     override fun getCheckResponseOfWeather(
         response: Response,

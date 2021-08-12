@@ -10,7 +10,7 @@ import okhttp3.Request
 object Client : IClient {
     private val okHttpClient = OkHttpClient()
     private const val baseUrl = "https://www.metaweather.com/api/"
-    private val checkResponse = CheckResponse(Gson())
+    private val checkResponse = Response(Gson())
 
     override fun getWeatherForCity(cityId: Int): Status<WeatherResponse> {
         val request = Request.Builder().url("${baseUrl}location/$cityId/").build()

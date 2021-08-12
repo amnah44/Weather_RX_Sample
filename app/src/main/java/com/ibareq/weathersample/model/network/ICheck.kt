@@ -8,6 +8,6 @@ import okhttp3.Response
 interface ICheck {
 
     fun getCheckResponseOfWeather(response: Response, weather: Class<WeatherResponse>): Status<WeatherResponse>
-    fun getCheckResponseOfLocation(response:Response, weather: Class<LocationResponse>): Status<LocationResponse>
+    fun getCheckResponseOfLocation(response: Response, weather: Class<LocationResponse>): Status<LocationResponse>
 
 }
