@@ -4,7 +4,9 @@ import com.ibareq.weathersample.model.Status
 import com.ibareq.weathersample.model.network.Client
 import com.ibareq.weathersample.model.response.LocationResponse
 import com.ibareq.weathersample.model.response.WeatherResponse
+import io.reactivex.rxjava3.annotations.NonNull
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableEmitter
 
 object WeatherRepository: IWeather {
 
@@ -26,14 +28,22 @@ object WeatherRepository: IWeather {
                 }
                 is Status.Success -> {
                     Observable.create { emitter ->
-                        if (it.data.isEmpty()) {
-                            emitter.onNext(Status.Error("city not found"))
-                        } else {
-                            emitter.onNext(Client.getWeatherForCity(it.data[0].cityId)) //to make it easier we pick the first city and skip others
-                        }
+                        //to check if city found in Api or not
+                       isItemFoundInApi(it,emitter)
                         emitter.onComplete()
                     }
                 }
             }
         }
+
+    private fun isItemFoundInApi(
+        status: Status.Success<LocationResponse>,
+        emitter: @NonNull ObservableEmitter<Status<WeatherResponse>>
+    ) {
+        if (status.data.isEmpty()) {
+            emitter.onNext(Status.Error("city not found"))
+        } else {
+            emitter.onNext(Client.getWeatherForCity(status.data[0].cityId)) //to make it easier we pick the first city and skip others
+        }
+    }
 }

@@ -15,6 +15,7 @@ import kotlin.math.roundToInt
 class MainActivity : BaseActivity<ActivityMainBinding>(), IMainView {
 
     private val disposable: CompositeDisposable = CompositeDisposable()
+
     //private val weatherRepository = WeatherRepository()
     private var presenter = MainPresenter(this)
 
@@ -24,24 +25,24 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), IMainView {
         ActivityMainBinding::inflate
 
     override fun setup() {
-
-            binding!!.buttonSearch.setOnClickListener {
-                presenter.getWeatherForCity(binding!!.inputCityName.text.toString())
-            }
+        binding!!.buttonSearch.setOnClickListener {
+            presenter.getWeatherForCity(binding!!.inputCityName.text.toString())
+        }
     }
 
     override fun addCallbacks() {}
 
     override fun onWeatherResult(response: Observable<Status<WeatherResponse>>) {
         disposable.add(
-                 response
+            response
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(::getView)
         )
 
     }
-    private fun getView(response: Status<WeatherResponse>){
+
+    private fun getView(response: Status<WeatherResponse>) {
         hideAllViews()
         when (response) {
             is Status.Error -> {
