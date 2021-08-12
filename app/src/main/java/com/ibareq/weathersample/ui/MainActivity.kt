@@ -16,7 +16,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), IMainView {
 
     private val disposable: CompositeDisposable = CompositeDisposable()
 
-    //private val weatherRepository = WeatherRepository()
     private var presenter = MainPresenter(this)
 
     override val LOG_TAG: String = TAG
